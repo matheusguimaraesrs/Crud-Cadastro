@@ -32,14 +32,28 @@ public class ContatoController : Controller
     }
     
     //Editar
-    public IActionResult Editar()
+    public IActionResult Editar(int id)
     {
-        return View();
+        ContatoModel contato = _repository.ListForId(id);
+        return View(contato);
+    }
+    [HttpPost]
+    public IActionResult Editar(ContatoModel contato)
+    {
+        _repository.Update(contato);
+        return RedirectToAction("Index");
     }
     
     //Apagar
-    public IActionResult Apagar()
+    public IActionResult Apagar(int id)
     {
-        return View();
+        ContatoModel contato = _repository.ListForId(id);
+        return View(contato);
+    }
+
+    public IActionResult ApagarSim(int id)
+    {
+        _repository.Delete(id);
+        return RedirectToAction("Index");
     }
 }
