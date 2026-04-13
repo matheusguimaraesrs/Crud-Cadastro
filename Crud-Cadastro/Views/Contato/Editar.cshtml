@@ -1,3 +1,4 @@
+@model ContatoModel
 @{
     ViewData["Title"] = "Editar contato";
 }
@@ -6,26 +7,34 @@
     <h2>Editar contato</h2>
 </div>
 
-<form>
+<form asp-controller="Contato" asp-action="Editar" method="post">
+    
+    <input type="hidden" asp-for="Id" />
+    
     <div class="form-group" style="margin: 10px 0;">
         <label for="nome">Nome</label>
-        <input type="text" class="form-control" placeholder="Digite o nome do contato">
+        <input type="text" asp-for="Name" class="form-control" placeholder="Digite o nome do contato">
+        @Html.ValidationMessageFor(x => x.Name)
     </div>
     <div class="form-group" style="margin: 10px 0;">
         <label for="email">Email</label>
-        <input type="text" class="form-control" placeholder="Digite o email do contato">
+        <input type="text" asp-for="Email" class="form-control" placeholder="Digite o email do contato">
+        @Html.ValidationMessageFor(x => x.Email)
     </div>
     <div class="form-group" style="margin: 10px 0;">
         <label for="contato">Contato</label>
-        <input type="text" class="form-control" placeholder="Digite um número de contato">
+        <input type="text" asp-for="Contact" class="form-control" placeholder="Digite um número de contato">
+        @Html.ValidationMessageFor(x => x.Contact)
     </div>
     
     <br/>
+    
     <div style="margin: 10px 0;">
-        <button type="submit" class="btn btn-primary w-100">Editar</button>
+        <button type="submit" class="btn btn-primary w-100">Salvar</button>
     </div>
+    
     <div style="margin: 10px 0;">
         <a class="btn btn-secondary w-100" asp-controller="Contato" asp-action="Index" role="button">Voltar</a>
     </div>
-    
+
 </form>

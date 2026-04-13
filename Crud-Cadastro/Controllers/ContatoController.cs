@@ -27,19 +27,76 @@ public class ContatoController : Controller
     [HttpPost]
     public IActionResult Criar(ContatoModel contato)
     {
-        _repository.Add(contato);
-        return RedirectToAction("Index");
+        try
+        {
+            if (ModelState.IsValid)
+            {
+                _repository.Add(contato);
+                TempData["MensagemSucesso"] = "Contato criado com sucesso!";
+                return RedirectToAction("Index");
+            }
+        }
+        catch (Exception e)
+        {
+            TempData[$"MensagemErro"] = $"Ops! Ocorreu um erro :(\nError: {e.Message}";
+            return RedirectToAction("Index");
+        }        
+        
+        return View(contato);
     }
     
     //Editar
-    public IActionResult Editar()
+    public IActionResult Editar(int id)
     {
-        return View();
+        ContatoModel contato = _repository.ListForId(id);
+        return View(contato);
+    }
+    [HttpPost]
+    public IActionResult Editar(ContatoModel contato)
+    {
+        try
+        {
+            if (ModelState.IsValid)
+            {
+                _repository.Update(contato);
+                TempData["MensagemSucesso"] = "Contato criado com sucesso!";
+                return RedirectToAction("Index");
+            }
+        }
+        catch (Exception e)
+        {
+            TempData[$"MensagemErro"] = $"Ops! Ocorreu um erro :(\nError: {e.Message}";
+            return RedirectToAction("Index");
+        }
+        
+        return View(contato);
     }
     
     //Apagar
-    public IActionResult Apagar()
+    public IActionResult Apagar(int id)
     {
-        return View();
+        ContatoModel contato = _repository.ListForId(id);
+        return View(contato);
+    }
+
+    public IActionResult ApagarSim(int id)
+    {
+        try
+        {
+            bool deleted = _repository.Delete(id);
+            if (deleted)
+            {
+                TempData[$"MensagemSucesso"] = $"Contato apagado  com sucesso!";
+            }
+            else
+            {
+                TempData[$"MensagemErro"] = $"Ops! Ocorreu um erro";
+            }
+        }
+        catch (Exception e)
+        {
+            TempData[$"MensagemErro"] = $"Ops! Ocorreu um erro :(\nError: {e.Message}";
+        }
+        return RedirectToAction("Index");
     }
 }
