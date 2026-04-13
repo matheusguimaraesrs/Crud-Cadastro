@@ -13,9 +13,12 @@ public class ContatoController : Controller
     }
     
     //Index
-    public IActionResult Index()
+    public IActionResult Index(int currentPage = 1, int pageSize = 10)
     {
-        List<ContatoModel> contacts = _repository.AllContacts();
+        int allContacts = _repository.AllContacts();
+        List<ContatoModel> contacts = _repository.PageContacts(currentPage, pageSize);
+        ViewBag.CurrentPage = currentPage;
+        ViewBag.TotalPages = (int)Math.Ceiling((double)allContacts / pageSize);
         return View(contacts);
     }
     

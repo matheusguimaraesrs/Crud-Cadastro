@@ -30,13 +30,13 @@
     
     <table class="table table-striped">
         <thead>
-            <tr>
-                <th scope="col">#</th>
-                <th scope="col">Nome</th>
-                <th scope="col">Email</th>
-                <th scope="col">Contato</th>
-                <th scope="col"></th>
-            </tr>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Email</th>
+            <th scope="col">Contato</th>
+            <th scope="col"></th>
+        </tr>
         </thead>
         <tbody>
         
@@ -76,5 +76,31 @@
         
         </tbody>
     </table>
+    
+    <nav aria-label="Navegação de Páginas">
+        <ul class="pagination justify-content-center">
+            
+            <li class="page-item @(ViewBag.CurrentPage <= 1 ? "disabled" : "")">
+                <a class="page-link" asp-action="Index" asp-route-currentPage="@(ViewBag.CurrentPage - 1)">
+                    Anterior
+                </a>
+            </li>
+            
+            @for (int i = 1; i <= ViewBag.TotalPages; i++)
+            {
+                <li class="page-item @(ViewBag.CurrentPage == i ? "active" : "")">
+                    <a class="page-link" asp-action="Index" asp-route-currentPage="@i">
+                        @i
+                    </a>
+                </li>
+            }
+            
+            <li class="page-item @(ViewBag.CurrentPage >= ViewBag.TotalPages ? "disabled" : "")">
+                <a class="page-link" asp-action="Index" asp-route-currentPage="@(ViewBag.CurrentPage + 1)">
+                    Próximo
+                </a>
+            </li>
+        </ul>
+    </nav>
     
 </div>
