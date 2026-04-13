@@ -41,3 +41,16 @@ footer {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+.field-validation-error {
+  color: darkred;
+}
+
+.close-alert {
+  position: absolute;
+  right: -1px;
+  top: -1px;
+  border-radius: 5px;
+  width: 25px;
+  height: 27px;
+}
