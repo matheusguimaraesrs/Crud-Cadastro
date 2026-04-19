@@ -11,7 +11,7 @@ public class ContatoRepository : IContatoRepository
         _dbContext = bdContext;
     }
 
-    public ContatoModel ListForId(int id)
+    public ContatoModel? ListForId(int id)
     {
         return _dbContext.Contatos.FirstOrDefault(c => c.Id == id);
     }

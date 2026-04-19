@@ -1,0 +1,33 @@
+@model Crud_Cadastro.DTOs.LoginRequest
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@{
+    Layout = "_LayoutLogin";
+    ViewData["Title"] = "Login";
+}
+
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        <button type="button" class="btn btn-danger btn-sm close-alert" aria-label="Close">X</button>
+        @TempData["MensagemErro"]
+    </div>    
+}
+
+<div style="margin: 20px 450px" >
+    
+    <form asp-controller="Login" asp-action="Entrar" method="post">
+        <div class="mb-3">
+            <label for="login" class="form-label">Login</label>
+            <input type="text" class="form-control" id="login" aria-describedby="emailHelp" asp-for="Login">
+            @Html.ValidationMessageFor(u => u.Login)
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Senha</label>
+            <input type="password" class="form-control" id="password" asp-for="Password">
+            @Html.ValidationMessageFor(u => u.Password)
+        </div>
+        
+        <button type="submit" class="btn btn-primary w-100">Entrar</button>
+    </form>
+    
+</div>
