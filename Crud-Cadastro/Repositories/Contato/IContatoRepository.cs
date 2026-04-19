@@ -1,6 +1,6 @@
 using Crud_Cadastro.Models;
 
-namespace Crud_Cadastro.Repositories;
+namespace Crud_Cadastro.Repositories.Contato;
 
 public interface IContatoRepository
 {

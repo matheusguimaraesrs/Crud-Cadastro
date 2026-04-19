@@ -1,12 +1,13 @@
-@model List<ContatoModel>
+@using Crud_Cadastro.Enums
+@model List<UsuarioModel>
 @{
-    ViewData["Title"] = "Listagem de contatos";
+    ViewData["Title"] = "Listagem de Usuários";
 }
 
 <div class="text-center">
     
     <div class="d-grid gap-2 d-md-flex justify-content-md-start">
-        <a class="btn btn-primary" role="button" asp-controller="Contato" asp-action="Criar">Adicionar novo contato</a>
+        <a class="btn btn-primary" role="button" asp-controller="Usuario" asp-action="Criar">Adicionar novo usuário</a>
     </div>
     <br/>
     
@@ -25,16 +26,18 @@
         </div>    
     }
     
-    <h2>Listagem de Contatos</h2>
+    <h2>Listagem de Usuários</h2>
     <br/>
     
-    <table id="table-contatos" class="table table-striped">
+    <table class="table table-striped">
         <thead>
         <tr>
             <th scope="col">#</th>
             <th scope="col">Nome</th>
             <th scope="col">Email</th>
-            <th scope="col">Contato</th>
+            <th scope="col">Login</th>
+            <th scope="col">Perfil</th>
+            <th scope="col">Data de Cadastro</th>
             <th scope="col"></th>
         </tr>
         </thead>
@@ -42,20 +45,22 @@
         
         @if (Model != null && Model.Any())
         {
-            foreach (ContatoModel contato in Model)
+            foreach (UsuarioModel usuario in Model)
             {
                 <tr>
-                    <th scope="row">@contato.Id</th>
-                    <td>@contato.Name</td>
-                    <td>@contato.Email</td>
-                    <td>@contato.Contact</td>
+                    <th scope="row">@usuario.Id</th>
+                    <td>@usuario.Name</td>
+                    <td>@usuario.Email</td>
+                    <td>@usuario.Login</td>
+                    <td>@(usuario.Profile == ProfileEnum.Admin ? "Admin" : "Usuário")</td>
+                    <td>@usuario.CreatedOn</td>
                     <td>
                         <div class="btn-group" role="group">
                             <a
                                 role="button"
                                 class="btn btn-primary"
-                                asp-route-id="@contato.Id"
-                                asp-controller="Contato"
+                                asp-route-id="@usuario.Id"
+                                asp-controller="Usuario"
                                 asp-action="Editar">
                                 Editar
                             </a>
@@ -63,8 +68,8 @@
                             <a
                                 role="button"
                                 class="btn btn-danger"
-                                asp-route-id="@contato.Id"
-                                asp-controller="Contato" 
+                                asp-route-id="@usuario.Id"
+                                asp-controller="Usuario" 
                                 asp-action="Apagar">
                                 Apagar
                             </a>
@@ -78,10 +83,8 @@
     </table>
     
     <div class="d-flex justify-content-center align-items-center position-relative mt-3">
-        
         <nav aria-label="Navegação de Páginas">
             <ul class="pagination justify-content-center">
-
                 <li class="page-item @(ViewBag.CurrentPage <= 1 ? "disabled" : "")">
                     <a class="page-link" 
                        asp-action="Index" 
@@ -124,6 +127,6 @@
                 </select>
             </form>
         </div>
-        
     </div>
+    
 </div>

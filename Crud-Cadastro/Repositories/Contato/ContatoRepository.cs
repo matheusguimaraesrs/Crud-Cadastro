@@ -1,8 +1,7 @@
 using Crud_Cadastro.Data;
 using Crud_Cadastro.Models;
-using Microsoft.EntityFrameworkCore;
 
-namespace Crud_Cadastro.Repositories;
+namespace Crud_Cadastro.Repositories.Contato;
 
 public class ContatoRepository : IContatoRepository
 {

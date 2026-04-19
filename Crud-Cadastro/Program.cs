@@ -1,14 +1,15 @@
 using Crud_Cadastro.Data;
-using Crud_Cadastro.Repositories;
+using Crud_Cadastro.Repositories.Contato;
+using Crud_Cadastro.Repositories.Usuario;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddEntityFrameworkSqlServer()
-    .AddDbContext<BdContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DataBase")));
+builder.Services.AddDbContext<BdContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DataBase")));
 builder.Services.AddScoped<IContatoRepository, ContatoRepository>(); //Pesquisar sobre injeção de dependência 
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>(); //Pesquisar sobre injeção de dependência 
 
 var app = builder.Build();
 

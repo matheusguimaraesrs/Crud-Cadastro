@@ -5,12 +5,15 @@ namespace Crud_Cadastro.Models;
 public class ContatoModel
 {
     public int Id { get; set; }
-    [Required(ErrorMessage = "Campo nome está vazio")]
+    
+    [Required(ErrorMessage = "Nome é obrigatório")]
     public string Name { get; set; }
-    [Required(ErrorMessage =  "Campo email está vazio")]
+    
+    [Required(ErrorMessage =  "Email é obrigatório")]
     [EmailAddress(ErrorMessage = "Email  invalido")]
     public string Email { get; set; }
-    [Required(ErrorMessage = "Campo número está vazio")]
+    
+    [Required(ErrorMessage = "Número de contato é obrigatório")]
     [Phone(ErrorMessage = "Contato invalido")]
     public string Contact { get; set; }
 }
