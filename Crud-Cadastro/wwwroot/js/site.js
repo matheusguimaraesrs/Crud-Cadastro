@@ -3,6 +3,7 @@
 
 // Write your JavaScript code.
 
+//Função para fechar os alertas
 $('.close-alert').click(function(){
     $('.alert').hide('hide');
 });

@@ -1,27 +1,25 @@
 using Crud_Cadastro.Models;
-using Crud_Cadastro.Repositories;
-using Crud_Cadastro.Repositories.Contato;
+using Crud_Cadastro.Repositories.Usuario;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Crud_Cadastro.Controllers;
 
-public class ContatoController : Controller
+public class UsuarioController : Controller
 {
-    private readonly IContatoRepository _repository;
-    public ContatoController(IContatoRepository repository)
+    private readonly IUsuarioRepository _repository;
+    public UsuarioController(IUsuarioRepository repository)
     {
         _repository = repository;
     }
-    
-    //Index
+    // GET
     public IActionResult Index(int currentPage = 1, int pageSize = 10)
     {
-        int allContacts = _repository.AllContacts();
-        List<ContatoModel> contacts = _repository.PageContacts(currentPage, pageSize);
+        int allUsers = _repository.AllUsers();
+        List<UsuarioModel> users = _repository.PageUsers(currentPage, pageSize);
         ViewBag.CurrentPage = currentPage;
         ViewBag.PageSize = pageSize;
-        ViewBag.TotalPages = (int)Math.Ceiling((double)allContacts / pageSize);
-        return View(contacts);
+        ViewBag.TotalPages = (int)Math.Ceiling((double)allUsers / pageSize);
+        return View(users);
     }
     
     //Criar
@@ -30,13 +28,13 @@ public class ContatoController : Controller
         return View();
     }
     [HttpPost]
-    public IActionResult Criar(ContatoModel contato)
+    public IActionResult Criar(UsuarioModel usuario)
     {
         try
         {
             if (ModelState.IsValid)
             {
-                _repository.Add(contato);
+                _repository.Add(usuario);
                 TempData["MensagemSucesso"] = "Contato criado com sucesso!";
                 return RedirectToAction("Index");
             }
@@ -47,24 +45,25 @@ public class ContatoController : Controller
             return RedirectToAction("Index");
         }        
         
-        return View(contato);
+        return View(usuario);
     }
     
     //Editar
     public IActionResult Editar(int id)
     {
-        ContatoModel contato = _repository.ListForId(id);
-        return View(contato);
+        UsuarioModel usuario = _repository.ListForId(id);
+        return View(usuario);
     }
     [HttpPost]
-    public IActionResult Editar(ContatoModel contato)
+    public IActionResult Editar(UsuarioModel usuario)
     {
         try
         {
+            ModelState.Remove("Password");
             if (ModelState.IsValid)
             {
-                _repository.Update(contato);
-                TempData["MensagemSucesso"] = "Contato criado com sucesso!";
+                _repository.Update(usuario);
+                TempData["MensagemSucesso"] = "Usuário criado com sucesso!";
                 return RedirectToAction("Index");
             }
         }
@@ -74,16 +73,15 @@ public class ContatoController : Controller
             return RedirectToAction("Index");
         }
         
-        return View(contato);
+        return View(usuario);
     }
     
     //Apagar
     public IActionResult Apagar(int id)
     {
-        ContatoModel contato = _repository.ListForId(id);
-        return View(contato);
+        UsuarioModel usuario = _repository.ListForId(id);
+        return View(usuario);
     }
-
     public IActionResult ApagarSim(int id)
     {
         try
@@ -91,7 +89,7 @@ public class ContatoController : Controller
             bool deleted = _repository.Delete(id);
             if (deleted)
             {
-                TempData[$"MensagemSucesso"] = $"Contato apagado  com sucesso!";
+                TempData[$"MensagemSucesso"] = $"Usuário  apagado  com sucesso!";
             }
             else
             {
@@ -105,3 +103,4 @@ public class ContatoController : Controller
         return RedirectToAction("Index");
     }
 }
+
