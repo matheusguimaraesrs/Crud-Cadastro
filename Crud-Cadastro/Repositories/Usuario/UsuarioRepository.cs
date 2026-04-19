@@ -6,16 +6,20 @@ namespace Crud_Cadastro.Repositories.Usuario;
 public class UsuarioRepository : IUsuarioRepository
 {
     private readonly BdContext _dbContext;
-    private IUsuarioRepository _usuarioRepositoryImplementation;
 
     public UsuarioRepository(BdContext bdContext)
     {
         _dbContext = bdContext;
     }
 
-    public UsuarioModel ListForId(int id)
+    public UsuarioModel? GetByLogin(string login)
     {
-        return _dbContext.Usuarios.FirstOrDefault(c => c.Id == id);
+        return _dbContext.Usuarios.FirstOrDefault(u => u.Login.ToUpper() == login.ToUpper());
+    }
+
+    public UsuarioModel? ListForId(int id)
+    {
+        return _dbContext.Usuarios.FirstOrDefault(u => u.Id == id);
     }
 
     public int AllUsers()

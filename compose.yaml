@@ -1,0 +1,7 @@
+﻿services:
+  crud-cadastro:
+    image: crud-cadastro
+    build:
+      context: .
+      dockerfile: Crud-Cadastro/Dockerfile
+

@@ -23,4 +23,9 @@ public class UsuarioModel
     public ProfileEnum? Profile { get; set; }
     public DateTime CreatedOn { get; set; }
     public DateTime? UpdatedOn { get; set; }
+    
+    public bool ValidatePassword(string password)
+    {
+        return Password == password;
+    }
 }

@@ -4,7 +4,8 @@ namespace Crud_Cadastro.Repositories.Usuario;
 
 public interface IUsuarioRepository
 {
-    UsuarioModel ListForId(int id);
+    UsuarioModel? GetByLogin(string login);
+    UsuarioModel? ListForId(int id);
     int AllUsers();
     List<UsuarioModel> PageUsers(int page, int pageSize);
     UsuarioModel Add(UsuarioModel usuarioModel);
