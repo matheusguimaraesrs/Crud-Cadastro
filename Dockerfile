@@ -1,27 +1,32 @@
-﻿# ESTÁGIO 1: Compilação (Build)
+# ESTÁGIO 1: Compilação (Build)
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
-# Copia o arquivo de projeto e restaura as dependências
-# Usando o nome com hífen conforme sua verificação na pasta
-COPY ["Crud-Cadastro.csproj", "./"]
-RUN dotnet restore
+# 1. Copia o arquivo .csproj que está dentro da pasta para a pasta correspondente no Docker
+COPY ["Crud-Cadastro/Crud-Cadastro.csproj", "Crud-Cadastro/"]
 
-# Copia o restante dos arquivos e compila a aplicação
+# 2. Restaura as dependências focando no arquivo específico
+RUN dotnet restore "Crud-Cadastro/Crud-Cadastro.csproj"
+
+# 3. Copia todo o conteúdo do repositório
 COPY . .
+
+# 4. Muda o diretório de trabalho para onde o projeto realmente está
+WORKDIR "/src/Crud-Cadastro"
+
+# 5. Compila e publica
 RUN dotnet publish "Crud-Cadastro.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 # ESTÁGIO 2: Execução (Runtime)
-# IMPORTANTE: Aqui também precisa ser 10.0 para suportar seu projeto
 FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
 
-# Copia os arquivos compilados do estágio anterior
+# Copia os arquivos publicados do estágio anterior
 COPY --from=build /app/publish .
 
-# O Render usa a porta 80 por padrão para serviços web gratuitos
+# Configurações de porta para o Render
 ENV ASPNETCORE_URLS=http://+:80
 EXPOSE 80
 
-# Comando para iniciar a aplicação usando a DLL do seu projeto
+# Comando para iniciar (A DLL geralmente mantém o nome do projeto)
 ENTRYPOINT ["dotnet", "Crud-Cadastro.dll"]
