@@ -5,7 +5,7 @@ Em Desenvolvimento
 
 * C#
 * ASP.NET MVC
-* Entity Framework Core
+* Entity Framework
 * HTML
 * CSS
 * JavaScript
